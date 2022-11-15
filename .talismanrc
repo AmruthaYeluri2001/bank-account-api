@@ -1,0 +1,20 @@
+fileignoreconfig:
+- filename: src/main/resources/db/migration/V1.1__CreateAccountsTable.sql
+  checksum: 0c1894afa1aac4f1f6e545b72807cdeb907e749b5a6792c9b8cc6e179ec14828
+- filename: src/main/resources/db/migration/V1.2__CreateTransactionsTable.sql
+  checksum: f1dfbf4d3c86799438370f94c2496f09e80c59b5c08e361b247109cf68fb343f
+- filename: build.gradle
+  checksum: 43ed0c27af7a3e228a0a77acb7c3b44e5305804641baf9f08eb2071b14e4f60c
+- filename: README.md
+  checksum: 8637c3a5acf8bc5b7105b8417cb4056289909bfe9a6006a9b0b97e1c3628ad01
+- filename: src/main/java/com/thoughtworks/bankaccountapi/request/AccountRequest.java
+  checksum: 04b3a92098051d88456bd8755029701bee8a2c841ac5725b1796e609148c62b3
+- filename: src/main/java/com/thoughtworks/bankaccountapi/service/AccountService.java
+  checksum: f25651b4802f870be0f8f72ef6ac69e75fc6ed84706569b105bf0b30f525b9bd
+- filename: src/main/resources/application.yml
+  checksum: 39d3ffbb25622c94d6baf3118065989baf330976cd3c73312c4ebeeb4d7c3fd9
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/AccountControllerIntegrationTest.java
+  checksum: 42d6fb9b1e713a13184cbafbc1025f72e201c390130940c274f891ab1c3cabf9
+- filename: src/main/java/com/thoughtworks/bankaccountapi/model/AccountModel.java
+  checksum: a4eeba7538e845658e843af13636b5facd4d08bea083dee21c650866aaf1ba98
+version: ""
