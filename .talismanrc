@@ -1,4 +1,6 @@
 fileignoreconfig:
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
+  checksum: f33b60446e28323f5787de42ae9ae40c6310604a4ba8cc265599aecb45d26fd6
 - filename: src/main/resources/db/migration/V1.1__CreateAccountsTable.sql
   checksum: 0c1894afa1aac4f1f6e545b72807cdeb907e749b5a6792c9b8cc6e179ec14828
 - filename: src/main/resources/db/migration/V1.2__CreateTransactionsTable.sql
@@ -23,4 +25,8 @@ fileignoreconfig:
   checksum: 1432a736b499b33de1aa6b7363e0669e9331266454cfeac1d9a8b276c10e8f33
 - filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
   checksum: ef058e499fcbf70746b7c9695448551433bfa69355f65eb5d446275fbf2a43eb
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
+  checksum: f33b60446e28323f5787de42ae9ae40c6310604a4ba8cc265599aecb45d26fd6
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
+  checksum: f33b60446e28323f5787de42ae9ae40c6310604a4ba8cc265599aecb45d26fd6
 version: ""

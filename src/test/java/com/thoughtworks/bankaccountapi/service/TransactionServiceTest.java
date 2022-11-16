@@ -44,4 +44,23 @@ public class TransactionServiceTest {
         verify(transactionRepository).save(any(TransactionModel.class));
         assertEquals(amountBeforeTransaction.add(transactionAmount), amountAfterTransaction);
     }
+
+    @Test
+    public void shouldSaveTransactionOnlyWhenLoggedInUserDebitsAmount() {
+        //arrange
+        TransactionService transactionService = new TransactionService(accountRepository, transactionRepository);
+        String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
+        BigDecimal transactionAmount = new BigDecimal(100);
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password");
+        AccountModel accountModel = new AccountModel(accountRequest);
+        when(accountRepository.findById(accountNumber)).thenReturn(Optional.of(accountModel));
+        BigDecimal amountBeforeTransaction = accountModel.getAmount();
+        //act
+        transactionService.debit(accountNumber, transactionAmount);
+        BigDecimal amountAfterTransaction = accountModel.getAmount();
+        //assert
+        verify(accountRepository).save(any(AccountModel.class));
+        verify(transactionRepository).save(any(TransactionModel.class));
+        assertEquals(amountBeforeTransaction.subtract(transactionAmount), amountAfterTransaction);
+    }
 }

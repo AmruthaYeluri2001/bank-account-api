@@ -25,6 +25,16 @@ public class TransactionController {
     ) {
         String accountNumber = principal.getName();
         transactionService.credit(accountNumber, transactionAmount);
+    }
+
+    @PostMapping("/debit")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void debit(
+            Principal principal,
+            @RequestParam(value = "transactionAmount") BigDecimal transactionAmount
+    ) {
+        String accountNumber = principal.getName();
+        transactionService.debit(accountNumber, transactionAmount);
 
     }
 }

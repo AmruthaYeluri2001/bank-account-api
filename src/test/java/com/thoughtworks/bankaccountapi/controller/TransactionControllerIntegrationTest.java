@@ -67,4 +67,22 @@ public class TransactionControllerIntegrationTest {
         //assert
         assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
     }
+
+    @Test
+    public void shouldBeAbleToDebitAmountOnlyWhentheUserIsLoggedIn() throws Exception {
+        //arrange
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "password");
+        AccountModel accountModel = new AccountModel(accountRequest);
+        accountRepository.save(accountModel);
+        String accountNumber = accountModel.getAccountNumber();
+        //act
+        MvcResult mvcResult = mockMvc.perform(
+                post("/debit")
+                        .with(httpBasic(accountNumber, "password"))
+                        .param("transactionAmount", String.valueOf(new BigDecimal(100)))
+        ).andReturn();
+        //assert
+        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
+    }
 }

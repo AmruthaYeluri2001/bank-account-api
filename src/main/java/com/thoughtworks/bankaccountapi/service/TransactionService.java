@@ -23,4 +23,12 @@ public class TransactionService {
         accountRepository.save(accountModel);
         transactionRepository.save(transactionModel);
     }
+
+    public void debit(String accountNumber, BigDecimal transactionAmount) {
+        AccountModel accountModel = accountRepository.findById(accountNumber).get();
+        TransactionModel transactionModel = new TransactionModel("DEBIT", transactionAmount, accountModel);
+        accountModel.setAmount((accountModel.getAmount()).subtract(transactionAmount));
+        accountRepository.save(accountModel);
+        transactionRepository.save(transactionModel);
+    }
 }

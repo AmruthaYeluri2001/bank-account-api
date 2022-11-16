@@ -33,4 +33,17 @@ public class TransactionControllerTest {
         //assert
         verify(transactionService).credit(accountNumber, transactionAmount);
     }
+
+    @Test
+    public void shouldbeAbleToInvokeDebitMethodInTransactionService() {
+        //arrange
+        TransactionController transactionController = new TransactionController(transactionService);
+        BigDecimal transactionAmount = new BigDecimal(100);
+        String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
+        when(principal.getName()).thenReturn(accountNumber);
+        //act
+        transactionController.debit(principal, transactionAmount);
+        //assert
+        verify(transactionService).debit(accountNumber, transactionAmount);
+    }
 }
