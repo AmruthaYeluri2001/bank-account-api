@@ -21,8 +21,7 @@ public class AccountServiceTest {
     private AccountService accountService;
     private AccountModel accountModel;
 
-   @Autowired
-   AccountRepository accountRepository;
+   private AccountRepository accountRepository;
 
     @BeforeEach
     public void before() {

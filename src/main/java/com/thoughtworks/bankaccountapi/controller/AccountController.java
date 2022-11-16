@@ -3,9 +3,7 @@ package com.thoughtworks.bankaccountapi.controller;
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
 import com.thoughtworks.bankaccountapi.service.AccountService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +20,13 @@ public class AccountController {
 
 
     @PostMapping("/sign-up")
-    ResponseEntity sign_up(@RequestBody AccountRequest accountRequest)
-    {
+    ResponseEntity sign_up(@RequestBody AccountRequest accountRequest) {
         return accountService.signup(accountRequest);
     }
 
     @GetMapping("/log-in")
-    @ResponseStatus(code=HttpStatus.OK)
-    public Map<String, Object> log_in(Principal principal)
-    {
+    @ResponseStatus(code = HttpStatus.OK)
+    public Map<String, Object> log_in(Principal principal) {
         String accountNumber = principal.getName();
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("accountNumber", accountNumber);

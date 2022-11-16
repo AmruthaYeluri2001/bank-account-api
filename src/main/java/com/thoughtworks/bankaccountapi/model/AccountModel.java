@@ -17,8 +17,8 @@ import java.math.BigDecimal;
 public class AccountModel {
 
     @Id
-    @GeneratedValue(generator="uuid")
-    @GenericGenerator(name="uuid",strategy = "uuid2")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String accountNumber;
 
 
