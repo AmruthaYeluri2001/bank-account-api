@@ -33,7 +33,7 @@ public class AccountServiceTest {
     @Test
     public void shouldSaveAccountWhenAccountSignUpSuccessful() {
         AccountRequest accountRequest =new AccountRequest("amrutha","password","password");
-        ResponseEntity expectedResponseEntity=new ResponseEntity("Sign up Successful", HttpStatus.OK);
+        ResponseEntity expectedResponseEntity=new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
         accountService = new AccountService(accountRepository);
 
         ResponseEntity actualResponseEntity= accountService.signup(accountRequest);

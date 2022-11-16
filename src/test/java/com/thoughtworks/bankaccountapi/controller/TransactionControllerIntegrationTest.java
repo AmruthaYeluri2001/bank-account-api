@@ -1,9 +1,9 @@
 package com.thoughtworks.bankaccountapi.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.bankaccountapi.BankAccountApiApplication;
 import com.thoughtworks.bankaccountapi.model.AccountModel;
 import com.thoughtworks.bankaccountapi.repository.AccountRepository;
+import com.thoughtworks.bankaccountapi.repository.TransactionRepository;
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,74 +14,58 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest(classes = BankAccountApiApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class AccountControllerIntegrationTest {
+public class TransactionControllerIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    AccountRepository accountRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    TransactionRepository transactionRepository;
 
     @BeforeEach
     public void before() {
+        transactionRepository.deleteAll();
         accountRepository.deleteAll();
     }
 
     @AfterEach
     public void after() {
+        transactionRepository.deleteAll();
         accountRepository.deleteAll();
     }
 
-    @Test
-    public void shouldBeAbleToSignUpWhenRequiredDetailsAreProvided() throws Exception {
-        //arrange
-        AccountRequest accountRequest=new AccountRequest("vaishnavi","password","password");
-        String requestJson=objectMapper.writeValueAsString(accountRequest);
-
-        //act
-        MvcResult mvcResult=mockMvc.perform(
-                post("/sign-up")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(requestJson)
-        ).andReturn();
-
-        //assert
-        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
-        assertEquals("Sign up Successful",mvcResult.getResponse().getContentAsString());
-    }
 
     @Test
-    public void shouldBeAbleToLogInWhenDetailsAreProvided() throws Exception {
+    public void shouldBeAbleToCreditAmountOnlyWhenTheUserIsLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password");
+        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "password");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String accountNumber=accountModel.getAccountNumber();
         //act
         MvcResult mvcResult=mockMvc.perform(
-                get("/log-in")
-                        .with(httpBasic(accountNumber,"password"))
+                post("/credit")
+                       .with(httpBasic(accountNumber,"password"))
+                       .param("transactionAmount", String.valueOf(new BigDecimal(100)))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
-        //assertEquals("Logged in Successful",mvcResult.getResponse().getContentAsString());
+        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
     }
 }

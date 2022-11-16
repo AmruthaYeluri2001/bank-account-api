@@ -1,7 +1,7 @@
 package com.thoughtworks.bankaccountapi.service;
 
 import com.thoughtworks.bankaccountapi.model.AccountModel;
-import com.thoughtworks.bankaccountapi.model.AccountPrincipal;
+import com.thoughtworks.bankaccountapi.model.AccountPrincipalModel;
 import com.thoughtworks.bankaccountapi.repository.AccountRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +19,7 @@ public class AccountPrincipalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String accountNumber) throws UsernameNotFoundException {
         AccountModel accountModel = findUserByAccountNumber(accountNumber);
-        return new AccountPrincipal(accountModel);
+        return new AccountPrincipalModel(accountModel);
     }
 
     private AccountModel findUserByAccountNumber(String accountNumber) {

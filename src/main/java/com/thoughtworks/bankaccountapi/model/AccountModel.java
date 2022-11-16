@@ -1,12 +1,18 @@
 package com.thoughtworks.bankaccountapi.model;
 
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "accounts")
 public class AccountModel {
 
@@ -32,40 +38,5 @@ public class AccountModel {
         this.name = accountRequest.getName();
         this.password = accountRequest.getPassword();
         this.amount = accountRequest.getAmount();
-    }
-
-    public AccountModel() {
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
     }
 }

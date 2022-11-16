@@ -25,6 +25,6 @@ public class AccountService {
         accountRequest.setPassword(bCryptPasswordEncoder.encode(accountRequest.getPassword()));
         accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        return new ResponseEntity("Sign up Successful", HttpStatus.OK);
+        return new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
     }
 }

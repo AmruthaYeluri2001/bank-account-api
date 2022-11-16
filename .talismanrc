@@ -17,4 +17,10 @@ fileignoreconfig:
   checksum: 42d6fb9b1e713a13184cbafbc1025f72e201c390130940c274f891ab1c3cabf9
 - filename: src/main/java/com/thoughtworks/bankaccountapi/model/AccountModel.java
   checksum: a4eeba7538e845658e843af13636b5facd4d08bea083dee21c650866aaf1ba98
+- filename: src/main/resources/db/migration/V1.3__RenameCurrentBalanceToTransactionAmountInTransactionsTable.sql
+  checksum: d72c22c99cf09d22ab1ff6002cb1a5f1a2edf3298ca9c537df8bc954f0020823
+- filename: src/main/resources/db/migration/V1.4__AlterDateOfTransactionDataTypeInTransactionsTable.sql
+  checksum: 1432a736b499b33de1aa6b7363e0669e9331266454cfeac1d9a8b276c10e8f33
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
+  checksum: ef058e499fcbf70746b7c9695448551433bfa69355f65eb5d446275fbf2a43eb
 version: ""

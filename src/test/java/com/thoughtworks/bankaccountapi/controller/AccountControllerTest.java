@@ -42,11 +42,5 @@ public class AccountControllerTest {
         //assert
         verify(accountService).signup(accountRequest);
     }
-//    @Test
-//    public void shouldBeAbleToLoginSuccessfully() throws Exception {
-//        String uri="/log-in";
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.get(uri)
-//                        .with((httpBasic("c329cf51-d278-4963-9e69-3ff4e66e8d92","password"))));
-//    }
+
 }

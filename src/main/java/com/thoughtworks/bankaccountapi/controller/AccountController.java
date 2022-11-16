@@ -22,7 +22,6 @@ public class AccountController {
 
 
     @PostMapping("/sign-up")
-    @ResponseStatus(code= HttpStatus.CREATED)
     ResponseEntity sign_up(@RequestBody AccountRequest accountRequest)
     {
         return accountService.signup(accountRequest);

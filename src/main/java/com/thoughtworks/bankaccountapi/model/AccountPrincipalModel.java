@@ -3,13 +3,12 @@ package com.thoughtworks.bankaccountapi.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.Collection;
 
-public class AccountPrincipal implements UserDetails {
+public class AccountPrincipalModel implements UserDetails {
     AccountModel accountModel;
 
-    public AccountPrincipal(AccountModel accountModel) {
+    public AccountPrincipalModel(AccountModel accountModel) {
         this.accountModel = accountModel;
     }
 
