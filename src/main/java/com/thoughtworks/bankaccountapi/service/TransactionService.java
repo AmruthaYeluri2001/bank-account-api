@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.security.Principal;
 
 @AllArgsConstructor
 @Service
@@ -22,5 +21,6 @@ public class TransactionService {
         TransactionModel transactionModel = new TransactionModel("CREDIT", transactionAmount, accountModel);
         accountModel.setAmount((accountModel.getAmount()).add(transactionAmount));
         accountRepository.save(accountModel);
-        transactionRepository.save(transactionModel);    }
+        transactionRepository.save(transactionModel);
+    }
 }

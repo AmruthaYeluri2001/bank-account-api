@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -58,14 +57,14 @@ public class TransactionControllerIntegrationTest {
         AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "password");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String accountNumber=accountModel.getAccountNumber();
+        String accountNumber = accountModel.getAccountNumber();
         //act
-        MvcResult mvcResult=mockMvc.perform(
+        MvcResult mvcResult = mockMvc.perform(
                 post("/credit")
-                       .with(httpBasic(accountNumber,"password"))
-                       .param("transactionAmount", String.valueOf(new BigDecimal(100)))
+                        .with(httpBasic(accountNumber, "password"))
+                        .param("transactionAmount", String.valueOf(new BigDecimal(100)))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
+        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
     }
 }

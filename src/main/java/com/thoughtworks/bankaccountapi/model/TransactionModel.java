@@ -30,13 +30,13 @@ public class TransactionModel {
     private BigDecimal transaction_amount;
 
     @OneToOne
-    @JoinColumn(name="account_number")
+    @JoinColumn(name = "account_number")
     private AccountModel accountModel;
 
     public TransactionModel(String transaction_type, BigDecimal transaction_amount, AccountModel accountModel) {
         this.transaction_type = transaction_type;
         this.transaction_amount = transaction_amount;
         this.accountModel = accountModel;
-        this.date_of_transaction=new Date();
+        this.date_of_transaction = new Date();
     }
 }

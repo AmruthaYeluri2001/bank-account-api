@@ -16,10 +16,9 @@ public class TransactionControllerTest {
     Principal principal;
 
     @BeforeEach
-    public void before()
-    {
-        transactionService=mock(TransactionService.class);
-        principal=mock(Principal.class);
+    public void before() {
+        transactionService = mock(TransactionService.class);
+        principal = mock(Principal.class);
     }
 
     @Test
@@ -27,11 +26,11 @@ public class TransactionControllerTest {
         //arrange
         TransactionController transactionController = new TransactionController(transactionService);
         BigDecimal transactionAmount = new BigDecimal(100);
-        String accountNumber="0816d5ee-e19d-41c6-ba7d-23188d57f000";
+        String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
         when(principal.getName()).thenReturn(accountNumber);
         //act
-        transactionController.credit(principal,transactionAmount);
+        transactionController.credit(principal, transactionAmount);
         //assert
-        verify(transactionService).credit(accountNumber,transactionAmount);
+        verify(transactionService).credit(accountNumber, transactionAmount);
     }
 }

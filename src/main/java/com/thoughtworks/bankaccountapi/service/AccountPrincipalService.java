@@ -22,6 +22,6 @@ public class AccountPrincipalService implements UserDetailsService {
     }
 
     private AccountModel findUserByAccountNumber(String accountNumber) {
-        return accountRepository.findById(accountNumber).orElseThrow(()-> new UsernameNotFoundException("user not found"));
+        return accountRepository.findById(accountNumber).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }

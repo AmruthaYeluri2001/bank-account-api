@@ -23,6 +23,6 @@ public class AccountRequest {
         this.name = name;
         this.password = password;
         this.confirmPassword=confirmPassword;
-        this.amount=new BigDecimal(0);
+        this.amount = new BigDecimal(0);
     }
 }
