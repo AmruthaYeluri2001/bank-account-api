@@ -33,4 +33,12 @@ public class AccountController {
         return userDetails;
     }
 
+    @GetMapping("/accountSummary")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Map<String,String> accountSummary(Principal principal)
+    {
+        String accountNumber=principal.getName();
+        Map<String, String> accountSummary = accountService.accountSummary(accountNumber);
+        return accountSummary;
+    }
 }

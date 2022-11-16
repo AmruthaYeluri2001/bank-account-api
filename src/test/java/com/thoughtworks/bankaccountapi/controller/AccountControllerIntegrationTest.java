@@ -82,4 +82,21 @@ public class AccountControllerIntegrationTest {
         assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
         //assertEquals("Logged in Successful",mvcResult.getResponse().getContentAsString());
     }
+
+    @Test
+    public void shouldReturnAccountSummaryOnlyWhenUserLoggedIn() throws Exception {
+        //arrange
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password");
+        AccountModel accountModel = new AccountModel(accountRequest);
+        accountRepository.save(accountModel);
+        String accountNumber=accountModel.getAccountNumber();
+        //act
+        MvcResult mvcResult = mockMvc.perform(
+                get("/accountSummary")
+                        .with(httpBasic(accountNumber, "password"))
+        ).andReturn();
+        //assert
+        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
+    }
 }
