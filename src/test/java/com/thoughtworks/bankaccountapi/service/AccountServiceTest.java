@@ -55,7 +55,7 @@ public class AccountServiceTest {
         when(accountRepository.findById(accountNumber)).thenReturn(Optional.of(accountModel));
         Map<String,String> expected_account_Summary=new HashMap<>();
         expected_account_Summary.put("Account Number",accountModel.getAccountNumber());
-        expected_account_Summary.put("Name of the Acoount Holder",accountModel.getName());
+        expected_account_Summary.put("Name of the Account Holder",accountModel.getName());
         expected_account_Summary.put("The Current Balance In the account", String.valueOf(accountModel.getAmount()));
 
         //act

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -36,5 +37,15 @@ public class TransactionController {
         String accountNumber = principal.getName();
         transactionService.debit(accountNumber, transactionAmount);
 
+    }
+
+    @GetMapping("/accountStatement")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Map<String,Object> accountStatement(Principal principal)
+    {
+        String accountNumber = principal.getName();
+        Map<String,Object> accountStatement=transactionService.accountStatement(accountNumber);
+        System.out.println(accountStatement);
+        return accountStatement;
     }
 }

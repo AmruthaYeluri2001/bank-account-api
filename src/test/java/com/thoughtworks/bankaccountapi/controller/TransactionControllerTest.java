@@ -11,20 +11,22 @@ import static org.mockito.Mockito.*;
 
 public class TransactionControllerTest {
 
-    TransactionService transactionService;
+    private TransactionService transactionService;
 
-    Principal principal;
+    private Principal principal;
+
+    private TransactionController transactionController;
 
     @BeforeEach
     public void before() {
         transactionService = mock(TransactionService.class);
         principal = mock(Principal.class);
+        transactionController = new TransactionController(transactionService);
     }
 
     @Test
     public void shouldbeAbleToInvokeCreditMethodInTransactionService() {
         //arrange
-        TransactionController transactionController = new TransactionController(transactionService);
         BigDecimal transactionAmount = new BigDecimal(100);
         String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
         when(principal.getName()).thenReturn(accountNumber);
@@ -37,7 +39,6 @@ public class TransactionControllerTest {
     @Test
     public void shouldbeAbleToInvokeDebitMethodInTransactionService() {
         //arrange
-        TransactionController transactionController = new TransactionController(transactionService);
         BigDecimal transactionAmount = new BigDecimal(100);
         String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
         when(principal.getName()).thenReturn(accountNumber);
@@ -45,5 +46,17 @@ public class TransactionControllerTest {
         transactionController.debit(principal, transactionAmount);
         //assert
         verify(transactionService).debit(accountNumber, transactionAmount);
+    }
+
+    @Test
+    public void shouldBeAbleToInvokeAccountStatementMethodInTransactionService() {
+        //arrange
+        Principal principal=mock(Principal.class);
+        String accountNumber="0816d5ee-e19d-41c6-ba7d-23188d57f000";
+        when(principal.getName()).thenReturn(accountNumber);
+        //act
+        transactionController.accountStatement(principal);
+        //assert
+        verify(transactionService).accountStatement(accountNumber);
     }
 }

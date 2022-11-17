@@ -5,6 +5,7 @@ import com.thoughtworks.bankaccountapi.model.AccountModel;
 import com.thoughtworks.bankaccountapi.repository.AccountRepository;
 import com.thoughtworks.bankaccountapi.repository.TransactionRepository;
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
+import com.thoughtworks.bankaccountapi.service.AccountService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest(classes = BankAccountApiApplication.class)
 @AutoConfigureMockMvc
@@ -84,5 +86,22 @@ public class TransactionControllerIntegrationTest {
         ).andReturn();
         //assert
         assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
+    }
+
+    @Test
+    public void shouldReturnAccountStatementOnlyWhenUserLoggedIn() throws Exception {
+        //arrange
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password");
+        AccountModel accountModel = new AccountModel(accountRequest);
+        accountRepository.save(accountModel);
+        String accountNumber=accountModel.getAccountNumber();
+        //act
+        MvcResult mvcResult = mockMvc.perform(
+                get("/accountStatement")
+                        .with(httpBasic(accountNumber, "password"))
+        ).andReturn();
+        //assert
+        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
     }
 }

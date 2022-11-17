@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
@@ -30,5 +33,16 @@ public class TransactionService {
         accountModel.setAmount((accountModel.getAmount()).subtract(transactionAmount));
         accountRepository.save(accountModel);
         transactionRepository.save(transactionModel);
+    }
+
+    public Map<String, Object> accountStatement(String accountNumber) {
+        AccountModel accountModel=accountRepository.findById(accountNumber).get();
+        Map<String,Object> account_Statement=new HashMap<>();
+        account_Statement.put("Account Number",accountModel.getAccountNumber());
+        account_Statement.put("Name of the Account Holder",accountModel.getName());
+        List<TransactionModel> List_Of_Transactions = transactionRepository.findByAccountModel_accountNumber(accountNumber);
+        account_Statement.put("List Of Transactions", List_Of_Transactions);
+        account_Statement.put("The Current Balance In the account", String.valueOf(accountModel.getAmount()));
+        return account_Statement;
     }
 }

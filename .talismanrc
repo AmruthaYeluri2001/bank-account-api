@@ -1,4 +1,6 @@
 fileignoreconfig:
+- filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
+  checksum: 9f0a3eb17a52edad4c1338a73ffa185bc222d4891d5f71f015d3c1d9f3f9c25e
 - filename: src/test/java/com/thoughtworks/bankaccountapi/controller/AccountControllerIntegrationTest.java
   checksum: 10a61438cac1c85db68747ac53275b8811e394e51aeb654fcd5b628def7c50f1
 - filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java

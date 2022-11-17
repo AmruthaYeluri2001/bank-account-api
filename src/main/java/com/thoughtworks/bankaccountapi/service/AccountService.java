@@ -17,7 +17,6 @@ public class AccountService {
 
     private AccountRepository accountRepository;
 
-    private AccountModel accountModel;
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -26,7 +25,7 @@ public class AccountService {
     public ResponseEntity signup(AccountRequest accountRequest) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         accountRequest.setPassword(bCryptPasswordEncoder.encode(accountRequest.getPassword()));
-        accountModel = new AccountModel(accountRequest);
+        AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         return new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
     }
@@ -35,7 +34,7 @@ public class AccountService {
         AccountModel accountModel = accountRepository.findById(accountNumber).get();
         Map<String,String> account_Summary=new HashMap<>();
         account_Summary.put("Account Number",accountModel.getAccountNumber());
-        account_Summary.put("Name of the Acoount Holder",accountModel.getName());
+        account_Summary.put("Name of the Account Holder",accountModel.getName());
         account_Summary.put("The Current Balance In the account", String.valueOf(accountModel.getAmount()));
         return account_Summary;
     }
