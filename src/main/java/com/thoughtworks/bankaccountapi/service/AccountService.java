@@ -3,8 +3,6 @@ package com.thoughtworks.bankaccountapi.service;
 import com.thoughtworks.bankaccountapi.model.AccountModel;
 import com.thoughtworks.bankaccountapi.repository.AccountRepository;
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +20,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public ResponseEntity signup(AccountRequest accountRequest) {
+    public void signup(AccountRequest accountRequest) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         accountRequest.setPassword(bCryptPasswordEncoder.encode(accountRequest.getPassword()));
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        return new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
     }
 
     public Map<String, String> accountSummary(String email) {

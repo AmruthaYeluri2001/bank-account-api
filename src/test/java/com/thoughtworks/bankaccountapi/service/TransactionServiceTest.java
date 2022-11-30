@@ -35,7 +35,7 @@ public class TransactionServiceTest {
         //arrange
         String email = "amrutha@gmail.com";
         BigDecimal transactionAmount = new BigDecimal(100);
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password", "amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(accountModel));
         BigDecimal amountBeforeTransaction = accountModel.getAmount();
@@ -53,7 +53,7 @@ public class TransactionServiceTest {
         //arrange
         String email = "amrutha@gmail.com";
         BigDecimal transactionAmount = new BigDecimal(100);
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password", "amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(accountModel));
         BigDecimal amountBeforeTransaction = accountModel.getAmount();
@@ -70,7 +70,7 @@ public class TransactionServiceTest {
     public void shouldreturnAccountStatementOnlyWhenUserLoggedIn() {
         //arrange
         String email = "amrutha@gmail.com";
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password", "amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         when(accountRepository.findByEmail(email)).thenReturn(Optional.of(accountModel));
         TransactionModel transactionModel1 = new TransactionModel("CREDIT", new BigDecimal(100), accountModel);

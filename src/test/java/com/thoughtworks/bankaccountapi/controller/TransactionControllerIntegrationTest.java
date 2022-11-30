@@ -5,7 +5,6 @@ import com.thoughtworks.bankaccountapi.model.AccountModel;
 import com.thoughtworks.bankaccountapi.repository.AccountRepository;
 import com.thoughtworks.bankaccountapi.repository.TransactionRepository;
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
-import com.thoughtworks.bankaccountapi.service.AccountService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,8 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(classes = BankAccountApiApplication.class)
 @AutoConfigureMockMvc
@@ -56,7 +55,7 @@ public class TransactionControllerIntegrationTest {
     public void shouldBeAbleToCreditAmountOnlyWhenTheUserIsLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "password","latha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "latha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
@@ -74,7 +73,7 @@ public class TransactionControllerIntegrationTest {
     public void shouldBeAbleToDebitAmountOnlyWhentheUserIsLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "password","lathasree@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("lathaSree", bCryptPasswordEncoder.encode("password"), "lathasree@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
@@ -85,23 +84,23 @@ public class TransactionControllerIntegrationTest {
                         .param("transactionAmount", String.valueOf(new BigDecimal(100)))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
+        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
     }
 
     @Test
     public void shouldReturnAccountStatementOnlyWhenUserLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password","amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String email=accountModel.getEmail();
+        String email = accountModel.getEmail();
         //act
         MvcResult mvcResult = mockMvc.perform(
                 get("/accountStatement")
                         .with(httpBasic(email, "password"))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
+        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
     }
 }

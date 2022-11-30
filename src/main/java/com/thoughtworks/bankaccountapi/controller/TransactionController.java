@@ -43,8 +43,6 @@ public class TransactionController {
     @ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> accountStatement(Principal principal) {
         String email = principal.getName();
-        Map<String, Object> accountStatement = transactionService.accountStatement(email);
-        System.out.println(accountStatement);
-        return accountStatement;
+        return transactionService.accountStatement(email);
     }
 }

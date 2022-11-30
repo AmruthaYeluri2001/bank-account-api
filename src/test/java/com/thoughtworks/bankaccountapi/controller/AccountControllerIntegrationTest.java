@@ -50,53 +50,51 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldBeAbleToSignUpWhenRequiredDetailsAreProvided() throws Exception {
         //arrange
-        AccountRequest accountRequest=new AccountRequest("vaishnavi","password","password","vaishnavi@gmail.com");
-        String requestJson=objectMapper.writeValueAsString(accountRequest);
+        AccountRequest accountRequest = new AccountRequest("vaishnavi", "password", "vaishnavi@gmail.com");
+        String requestJson = objectMapper.writeValueAsString(accountRequest);
 
         //act
-        MvcResult mvcResult=mockMvc.perform(
+        MvcResult mvcResult = mockMvc.perform(
                 post("/sign-up")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestJson)
         ).andReturn();
 
         //assert
-        assertEquals(HttpStatus.CREATED.value(),mvcResult.getResponse().getStatus());
-        assertEquals("Sign up Successful",mvcResult.getResponse().getContentAsString());
+        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
     }
 
     @Test
     public void shouldBeAbleToLogInWhenDetailsAreProvided() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password","amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String email=accountModel.getEmail();
+        String email = accountModel.getEmail();
         //act
-        MvcResult mvcResult=mockMvc.perform(
+        MvcResult mvcResult = mockMvc.perform(
                 get("/log-in")
-                        .with(httpBasic(email,"password"))
+                        .with(httpBasic(email, "password"))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
-        //assertEquals("Logged in Successful",mvcResult.getResponse().getContentAsString());
+        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
     }
 
     @Test
     public void shouldReturnAccountSummaryOnlyWhenUserLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password","amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String email=accountModel.getEmail();
+        String email = accountModel.getEmail();
         //act
         MvcResult mvcResult = mockMvc.perform(
                 get("/accountSummary")
                         .with(httpBasic(email, "password"))
         ).andReturn();
         //assert
-        assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
+        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
     }
 }

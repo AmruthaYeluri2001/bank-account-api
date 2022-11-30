@@ -9,8 +9,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionControllerTest {
@@ -29,35 +34,31 @@ public class TransactionControllerTest {
     public void shouldbeAbleToInvokeCreditMethodInTransactionService() {
         //arrange
         BigDecimal transactionAmount = new BigDecimal(100);
-        String email = "amrutha@gmail.com";
-        when(principal.getName()).thenReturn(email);
         //act
         transactionController.credit(principal, transactionAmount);
         //assert
-        verify(transactionService).credit(email, transactionAmount);
+        verify(transactionService).credit(principal.getName(), transactionAmount);
     }
 
     @Test
     public void shouldbeAbleToInvokeDebitMethodInTransactionService() {
         //arrange
         BigDecimal transactionAmount = new BigDecimal(100);
-        String email = "amrutha@gmail.com";
-        when(principal.getName()).thenReturn(email);
         //act
         transactionController.debit(principal, transactionAmount);
         //assert
-        verify(transactionService).debit(email, transactionAmount);
+        verify(transactionService).debit(principal.getName(), transactionAmount);
     }
 
     @Test
     public void shouldBeAbleToInvokeAccountStatementMethodInTransactionService() {
         //arrange
-        Principal principal = mock(Principal.class);
-        String email = "amrutha@gmail.com";
-        when(principal.getName()).thenReturn(email);
+        HashMap<String, Object> expectedAccountStatementResponse = new HashMap<>();
+        when(transactionService.accountStatement(principal.getName())).thenReturn(expectedAccountStatementResponse);
         //act
-        transactionController.accountStatement(principal);
+        Map<String, Object> actualAccountStatementResponse = transactionController.accountStatement(principal);
         //assert
-        verify(transactionService).accountStatement(email);
+        verify(transactionService).accountStatement(principal.getName());
+        assertThat(actualAccountStatementResponse, is(expectedAccountStatementResponse));
     }
 }

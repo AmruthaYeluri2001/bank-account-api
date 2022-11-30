@@ -1,14 +1,14 @@
 package com.thoughtworks.bankaccountapi.response;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class TransactionInAccountStatementResponse {
 
