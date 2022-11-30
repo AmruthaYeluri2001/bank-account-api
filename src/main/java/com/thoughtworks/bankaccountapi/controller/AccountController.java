@@ -16,8 +16,6 @@ import java.util.Map;
 public class AccountController {
 
     AccountService accountService;
-
-
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     void sign_up(@RequestBody AccountRequest accountRequest) {
@@ -29,7 +27,7 @@ public class AccountController {
     public Map<String, String> log_in(Principal principal) {
         String email = principal.getName();
         Map<String, String> userDetails = new HashMap<>();
-        userDetails.put("accountNumber", email);
+        userDetails.put("User email", email);
         return userDetails;
     }
 
