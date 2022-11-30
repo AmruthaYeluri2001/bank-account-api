@@ -2,29 +2,31 @@ package com.thoughtworks.bankaccountapi.controller;
 
 import com.thoughtworks.bankaccountapi.request.AccountRequest;
 import com.thoughtworks.bankaccountapi.service.AccountService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.security.Principal;
 
 import static org.mockito.Mockito.*;
 
 
+@ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
+
+    @Mock
     AccountService accountService;
 
+    @InjectMocks
     AccountController accountController;
 
-    @BeforeEach
-    public void before() {
-        accountService = mock(AccountService.class);
-        accountController = new AccountController(accountService);
-    }
 
     @Test
     public void shouldBeAbleToInvokeSignUpMethodInAccountService() {
         //arrange
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password","amrutha@gmail.com");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password", "amrutha@gmail.com");
         //act
         accountController.sign_up(accountRequest);
         //assert
@@ -34,12 +36,12 @@ public class AccountControllerTest {
     @Test
     public void shouldBeAbleToInvokeAccountSummaryMethodInAccountService() {
         //arrange
-        Principal principal=mock(Principal.class);
-        String accountNumber="0816d5ee-e19d-41c6-ba7d-23188d57f000";
-        when(principal.getName()).thenReturn(accountNumber);
+        Principal principal = mock(Principal.class);
+        String email = "amrutha@gmail.com";
+        when(principal.getName()).thenReturn(email);
         //act
         accountController.accountSummary(principal);
         //assert
-        verify(accountService).accountSummary(accountNumber);
+        verify(accountService).accountSummary(email);
     }
 }
