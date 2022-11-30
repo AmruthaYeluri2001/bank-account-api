@@ -25,6 +25,7 @@ public class AccountServiceTest {
     @Mock
     private AccountRepository accountRepository;
 
+
     @Test
     public void shouldSaveAccountWhenAccountSignUpSuccessful() {
         //arrange

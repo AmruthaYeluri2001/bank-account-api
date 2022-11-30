@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = BankAccountApiApplication.class)
 @AutoConfigureMockMvc
@@ -53,15 +54,13 @@ public class AccountControllerIntegrationTest {
         AccountRequest accountRequest = new AccountRequest("vaishnavi", "password", "vaishnavi@gmail.com");
         String requestJson = objectMapper.writeValueAsString(accountRequest);
 
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+       mockMvc.perform(
                 post("/sign-up")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestJson)
-        ).andReturn();
+        ).andExpect(status().isCreated());
 
-        //assert
-        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
     }
 
     @Test
@@ -72,13 +71,11 @@ public class AccountControllerIntegrationTest {
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+       mockMvc.perform(
                 get("/log-in")
                         .with(httpBasic(email, "password"))
-        ).andReturn();
-        //assert
-        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+        ).andExpect(status().isOk());
     }
 
     @Test
@@ -89,12 +86,10 @@ public class AccountControllerIntegrationTest {
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+        mockMvc.perform(
                 get("/accountSummary")
                         .with(httpBasic(email, "password"))
-        ).andReturn();
-        //assert
-        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+        ).andExpect(status().isOk());
     }
 }

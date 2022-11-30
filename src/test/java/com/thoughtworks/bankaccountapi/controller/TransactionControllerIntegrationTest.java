@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = BankAccountApiApplication.class)
 @AutoConfigureMockMvc
@@ -59,14 +60,12 @@ public class TransactionControllerIntegrationTest {
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+       mockMvc.perform(
                 post("/credit")
                         .with(httpBasic(email, "password"))
                         .param("transactionAmount", String.valueOf(new BigDecimal(100)))
-        ).andReturn();
-        //assert
-        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
+        ).andExpect(status().isCreated());
     }
 
     @Test
@@ -77,14 +76,12 @@ public class TransactionControllerIntegrationTest {
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+        mockMvc.perform(
                 post("/debit")
                         .with(httpBasic(email, "password"))
                         .param("transactionAmount", String.valueOf(new BigDecimal(100)))
-        ).andReturn();
-        //assert
-        assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
+        ).andExpect(status().isCreated());
     }
 
     @Test
@@ -95,12 +92,10 @@ public class TransactionControllerIntegrationTest {
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
         String email = accountModel.getEmail();
-        //act
-        MvcResult mvcResult = mockMvc.perform(
+        //act and assert
+        mockMvc.perform(
                 get("/accountStatement")
                         .with(httpBasic(email, "password"))
-        ).andReturn();
-        //assert
-        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+        ).andExpect(status().isOk());
     }
 }
