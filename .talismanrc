@@ -1,4 +1,8 @@
 fileignoreconfig:
+- filename: src/main/resources/db/migration/V1.5__AddEmailColumnInAccountsTable.sql
+  checksum: 33c84f74725f00f06fcdb7597172e302dffb95a72745e0c2ce180f43195d2b5b
+- filename: src/main/java/com/thoughtworks/bankaccountapi/request/AccountRequest.java
+  checksum: 0c88c7ab0dde5d634f136c70da0959c351d41a47061226813f5d6d5f556f17ce
 - filename: src/test/java/com/thoughtworks/bankaccountapi/controller/TransactionControllerIntegrationTest.java
   checksum: 9f0a3eb17a52edad4c1338a73ffa185bc222d4891d5f71f015d3c1d9f3f9c25e
 - filename: src/test/java/com/thoughtworks/bankaccountapi/controller/AccountControllerIntegrationTest.java

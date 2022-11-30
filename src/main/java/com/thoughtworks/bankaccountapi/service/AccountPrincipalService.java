@@ -16,12 +16,12 @@ public class AccountPrincipalService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String accountNumber) throws UsernameNotFoundException {
-        AccountModel accountModel = findUserByAccountNumber(accountNumber);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AccountModel accountModel = findUserByEmail(email);
         return new AccountPrincipalModel(accountModel);
     }
 
-    private AccountModel findUserByAccountNumber(String accountNumber) {
-        return accountRepository.findById(accountNumber).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+    private AccountModel findUserByEmail(String email) {
+        return accountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }

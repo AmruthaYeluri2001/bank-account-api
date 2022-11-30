@@ -33,10 +33,14 @@ public class AccountModel {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    @Column(nullable = false)
+    private String email;
+
 
     public AccountModel(AccountRequest accountRequest) {
         this.name = accountRequest.getName();
         this.password = accountRequest.getPassword();
         this.amount = accountRequest.getAmount();
+        this.email = accountRequest.getEmail();
     }
 }

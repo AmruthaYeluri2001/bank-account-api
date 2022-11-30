@@ -35,7 +35,7 @@ public class AccountServiceTest {
     @Test
     public void shouldSaveAccountWhenAccountSignUpSuccessful() {
         //arrange
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password","amrutha@gmail.com");
         ResponseEntity expectedResponseEntity = new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
 
         //act
@@ -49,17 +49,17 @@ public class AccountServiceTest {
     @Test
     public void shouldReturnAccountSummaryOnlyWhenUserLoggedIn() {
         //arrange
-        String accountNumber = "0816d5ee-e19d-41c6-ba7d-23188d57f000";
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password");
+        String email = "amrutha@gmail.com";
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password","amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
-        when(accountRepository.findById(accountNumber)).thenReturn(Optional.of(accountModel));
+        when(accountRepository.findByEmail(email)).thenReturn(Optional.of(accountModel));
         Map<String,String> expected_account_Summary=new HashMap<>();
         expected_account_Summary.put("Account Number",accountModel.getAccountNumber());
         expected_account_Summary.put("Name of the Account Holder",accountModel.getName());
         expected_account_Summary.put("The Current Balance In the account", String.valueOf(accountModel.getAmount()));
 
         //act
-        Map<String, String> actual_account_Summary = accountService.accountSummary(accountNumber);
+        Map<String, String> actual_account_Summary = accountService.accountSummary(email);
         //assert
         assertEquals(expected_account_Summary,actual_account_Summary);
     }

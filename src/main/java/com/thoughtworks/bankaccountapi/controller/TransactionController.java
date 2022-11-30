@@ -24,8 +24,8 @@ public class TransactionController {
             Principal principal,
             @RequestParam(value = "transactionAmount") BigDecimal transactionAmount
     ) {
-        String accountNumber = principal.getName();
-        transactionService.credit(accountNumber, transactionAmount);
+        String email = principal.getName();
+        transactionService.credit(email, transactionAmount);
     }
 
     @PostMapping("/debit")
@@ -34,17 +34,16 @@ public class TransactionController {
             Principal principal,
             @RequestParam(value = "transactionAmount") BigDecimal transactionAmount
     ) {
-        String accountNumber = principal.getName();
-        transactionService.debit(accountNumber, transactionAmount);
+        String email = principal.getName();
+        transactionService.debit(email, transactionAmount);
 
     }
 
     @GetMapping("/accountStatement")
     @ResponseStatus(code = HttpStatus.OK)
-    public Map<String,Object> accountStatement(Principal principal)
-    {
-        String accountNumber = principal.getName();
-        Map<String,Object> accountStatement=transactionService.accountStatement(accountNumber);
+    public Map<String, Object> accountStatement(Principal principal) {
+        String email = principal.getName();
+        Map<String, Object> accountStatement = transactionService.accountStatement(email);
         System.out.println(accountStatement);
         return accountStatement;
     }

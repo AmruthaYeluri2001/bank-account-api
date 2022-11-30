@@ -24,7 +24,7 @@ public class AccountControllerTest {
     @Test
     public void shouldBeAbleToInvokeSignUpMethodInAccountService() {
         //arrange
-        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password");
+        AccountRequest accountRequest = new AccountRequest("amrutha", "password", "password","amrutha@gmail.com");
         //act
         accountController.sign_up(accountRequest);
         //assert

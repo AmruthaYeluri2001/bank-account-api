@@ -30,11 +30,11 @@ public class AccountService {
         return new ResponseEntity("Sign up Successful", HttpStatus.CREATED);
     }
 
-    public Map<String, String> accountSummary(String accountNumber) {
-        AccountModel accountModel = accountRepository.findById(accountNumber).get();
-        Map<String,String> account_Summary=new HashMap<>();
-        account_Summary.put("Account Number",accountModel.getAccountNumber());
-        account_Summary.put("Name of the Account Holder",accountModel.getName());
+    public Map<String, String> accountSummary(String email) {
+        AccountModel accountModel = accountRepository.findByEmail(email).get();
+        Map<String, String> account_Summary = new HashMap<>();
+        account_Summary.put("Account Number", accountModel.getAccountNumber());
+        account_Summary.put("Name of the Account Holder", accountModel.getName());
         account_Summary.put("The Current Balance In the account", String.valueOf(accountModel.getAmount()));
         return account_Summary;
     }

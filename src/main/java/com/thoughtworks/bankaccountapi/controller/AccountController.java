@@ -27,18 +27,18 @@ public class AccountController {
     @GetMapping("/log-in")
     @ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> log_in(Principal principal) {
-        String accountNumber = principal.getName();
+        String email = principal.getName();
+        System.out.println(email);
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("accountNumber", accountNumber);
+        userDetails.put("accountNumber", email);
         return userDetails;
     }
 
     @GetMapping("/accountSummary")
     @ResponseStatus(code = HttpStatus.OK)
-    public Map<String,String> accountSummary(Principal principal)
-    {
-        String accountNumber=principal.getName();
-        Map<String, String> accountSummary = accountService.accountSummary(accountNumber);
+    public Map<String, String> accountSummary(Principal principal) {
+        String email = principal.getName();
+        Map<String, String> accountSummary = accountService.accountSummary(email);
         return accountSummary;
     }
 }

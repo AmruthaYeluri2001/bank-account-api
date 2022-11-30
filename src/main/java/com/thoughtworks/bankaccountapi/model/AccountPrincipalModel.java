@@ -24,7 +24,7 @@ public class AccountPrincipalModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return accountModel.getAccountNumber();
+        return accountModel.getEmail();
     }
 
     @Override

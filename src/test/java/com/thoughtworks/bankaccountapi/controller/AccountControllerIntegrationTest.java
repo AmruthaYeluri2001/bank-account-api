@@ -50,7 +50,7 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldBeAbleToSignUpWhenRequiredDetailsAreProvided() throws Exception {
         //arrange
-        AccountRequest accountRequest=new AccountRequest("vaishnavi","password","password");
+        AccountRequest accountRequest=new AccountRequest("vaishnavi","password","password","vaishnavi@gmail.com");
         String requestJson=objectMapper.writeValueAsString(accountRequest);
 
         //act
@@ -69,14 +69,14 @@ public class AccountControllerIntegrationTest {
     public void shouldBeAbleToLogInWhenDetailsAreProvided() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password");
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password","amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String accountNumber=accountModel.getAccountNumber();
+        String email=accountModel.getEmail();
         //act
         MvcResult mvcResult=mockMvc.perform(
                 get("/log-in")
-                        .with(httpBasic(accountNumber,"password"))
+                        .with(httpBasic(email,"password"))
         ).andReturn();
         //assert
         assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());
@@ -87,14 +87,14 @@ public class AccountControllerIntegrationTest {
     public void shouldReturnAccountSummaryOnlyWhenUserLoggedIn() throws Exception {
         //arrange
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password");
+        AccountRequest accountRequest = new AccountRequest("amrutha", bCryptPasswordEncoder.encode("password"), "password","amrutha@gmail.com");
         AccountModel accountModel = new AccountModel(accountRequest);
         accountRepository.save(accountModel);
-        String accountNumber=accountModel.getAccountNumber();
+        String email=accountModel.getEmail();
         //act
         MvcResult mvcResult = mockMvc.perform(
                 get("/accountSummary")
-                        .with(httpBasic(accountNumber, "password"))
+                        .with(httpBasic(email, "password"))
         ).andReturn();
         //assert
         assertEquals(HttpStatus.OK.value(),mvcResult.getResponse().getStatus());

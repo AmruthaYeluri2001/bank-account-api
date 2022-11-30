@@ -19,10 +19,14 @@ public class AccountRequest {
 
     private BigDecimal amount;
 
-    public AccountRequest(String name, String password, String confirmPassword) {
+    private String email;
+
+    public AccountRequest(String name, String password, String confirmPassword, String email) {
         this.name = name;
         this.password = password;
-        this.confirmPassword=confirmPassword;
+        this.confirmPassword = confirmPassword;
         this.amount = new BigDecimal(0);
+        this.email = email;
     }
+
 }
