@@ -81,8 +81,10 @@ public class TransactionServiceTest {
         when(transactionRepository.findByAccountModel_accountNumber(email)).thenReturn(List_Of_transactions);
         List<TransactionInAccountStatementResponse> modifiedTransactionsList = new ArrayList<>();
         for (TransactionModel transaction : List_Of_transactions) {
-            TransactionInAccountStatementResponse transactionInAccountStatementResponse = new TransactionInAccountStatementResponse(transaction.getTransaction_type(),
-                    transaction.getTransaction_amount());
+            TransactionInAccountStatementResponse transactionInAccountStatementResponse = TransactionInAccountStatementResponse.builder().
+                    transaction_type(transaction.getTransaction_type()).
+                    transaction_amount(transaction.getTransaction_amount())
+                    .build();
             modifiedTransactionsList.add(transactionInAccountStatementResponse);
         }
         Map<String, Object> expected_accountStatement = new HashMap<>();

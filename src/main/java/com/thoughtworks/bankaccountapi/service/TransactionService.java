@@ -45,8 +45,10 @@ public class TransactionService {
         List<TransactionModel> List_Of_Transactions = transactionRepository.findByAccountModel_accountNumber(email);
         List<TransactionInAccountStatementResponse> modifiedTransactionsList = new ArrayList<>();
         for (TransactionModel transaction : List_Of_Transactions) {
-            TransactionInAccountStatementResponse transactionInAccountStatementResponse = new TransactionInAccountStatementResponse(transaction.getTransaction_type(),
-                    transaction.getTransaction_amount());
+            TransactionInAccountStatementResponse transactionInAccountStatementResponse = TransactionInAccountStatementResponse.builder().
+                    transaction_type(transaction.getTransaction_type()).
+                    transaction_amount(transaction.getTransaction_amount())
+                    .build();
             modifiedTransactionsList.add(transactionInAccountStatementResponse);
         }
         account_Statement.put("List Of Transactions", modifiedTransactionsList);
