@@ -78,7 +78,7 @@ public class TransactionServiceTest {
         List<TransactionModel> List_Of_transactions = new ArrayList<>();
         List_Of_transactions.add(transactionModel1);
         List_Of_transactions.add(transactionModel2);
-        when(transactionRepository.findByAccountModel_accountNumber(accountModel.getAccountNumber())).thenReturn(List_Of_transactions);
+        when(transactionRepository.findByAccountModel(accountModel)).thenReturn(List_Of_transactions);
         List<TransactionInAccountStatementResponse> modifiedTransactionsList = new ArrayList<>();
         for (TransactionModel transaction : List_Of_transactions) {
             TransactionInAccountStatementResponse transactionInAccountStatementResponse = TransactionInAccountStatementResponse.builder().

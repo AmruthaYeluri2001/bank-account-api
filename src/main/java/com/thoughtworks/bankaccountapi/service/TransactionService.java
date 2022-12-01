@@ -42,7 +42,7 @@ public class TransactionService {
         Map<String, Object> account_Statement = new HashMap<>();
         account_Statement.put("Account Number", accountModel.getAccountNumber());
         account_Statement.put("Name of the Account Holder", accountModel.getName());
-        List<TransactionModel> List_Of_Transactions = transactionRepository.findByAccountModel_accountNumber(accountModel.getAccountNumber());
+        List<TransactionModel> List_Of_Transactions = transactionRepository.findByAccountModel(accountModel);
         List<TransactionInAccountStatementResponse> modifiedTransactionsList = new ArrayList<>();
         for (TransactionModel transaction : List_Of_Transactions) {
             TransactionInAccountStatementResponse transactionInAccountStatementResponse = TransactionInAccountStatementResponse.builder().
